@@ -368,13 +368,18 @@ class MpiModel(builder.Model):
 
     def __init__(
             self, n_components, assignments, dt=0.001, label=None,
-            decoder_cache=NoDecoderCache(), save_file="", free_memory=True):
+            decoder_cache=NoDecoderCache(), save_file="",
+            compress_save_file=False, free_memory=True):
 
         self.n_components = n_components
         self.assignments = assignments
 
         if save_file:
-            self.save_file = open(save_file, 'w')
+            if compress_save_file:
+                import gzip
+                self.save_file = gzip.open(save_file + '.gz', 'wb')
+            else:
+                self.save_file = open(save_file, 'w')
             self.save_file.write(
                 "%s%s%s" % (n_components, MpiModel.outfile_delim, dt))
         else:
@@ -561,8 +566,11 @@ class MpiModel(builder.Model):
                 probe, self.sig[probe]['in'],
                 sample_every=probe.sample_every)
 
-        if not self.save_file:
+        if self.save_file:
+            self.save_file.close()
+        else:
             self.mpi_sim.finalize_build()
+
 
     def add_ops_to_mpi(self, component):
         """

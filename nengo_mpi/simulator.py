@@ -16,7 +16,8 @@ class Simulator(object):
 
     def __init__(
             self, network, dt=0.001, seed=None, model=None,
-            partitioner=None, assignments=None, save_file=""):
+            partitioner=None, assignments=None, save_file="",
+            compress_save_file=False):
         """
         Creates a Simulator for a nengo network than can be executed
         in parallel using MPI.
@@ -87,7 +88,8 @@ class Simulator(object):
             self.n_components, self.assignments, dt=dt,
             label="%s, dt=%f" % (network, dt),
             decoder_cache=get_default_decoder_cache(),
-            save_file=save_file)
+            save_file=save_file,
+            compress_save_file=compress_save_file)
 
         MpiBuilder.build(self.model, network)
 

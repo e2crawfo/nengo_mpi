@@ -43,6 +43,22 @@ n_nodes = np.ceil(n_processors / ranks_per_node)
 network_file = args.network
 assert network_file, "Must supply a network file to run."
 
+# Handle gz files
+if path.splitext(network_file)[1] == '.gz':
+    new_name = path.splitext(network_file)[0]
+
+    # Unzip file (writes out to new file)
+    import gzip
+    with gzip.open(network_file, 'rb') as f_in:
+        with open(new_name, 'wb') as f_out:
+            f_out.writelines(f_in)
+
+    # Remove gzipped file
+    os.remove(network_file)
+
+    # Use new file
+    network_file = new_name
+
 network_name = path.split(network_file)[-1]
 network_name = path.splitext(network_name)[0]
 print "Network name: ", network_name
