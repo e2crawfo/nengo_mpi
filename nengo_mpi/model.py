@@ -94,16 +94,16 @@ with warnings.catch_warnings():
     warnings.simplefilter('ignore')
 
     MpiBuilder.register(Ensemble)(
-        make_builder(builder.build_ensemble))
+        make_builder(builder.ensemble.build_ensemble))
 
     MpiBuilder.register(Node)(
-        make_builder(builder.build_node))
+        make_builder(builder.node.build_node))
 
     MpiBuilder.register(Connection)(
-        make_builder(builder.build_connection))
+        make_builder(builder.connection.build_connection))
 
     MpiBuilder.register(Probe)(
-        make_builder(builder.build_probe))
+        make_builder(builder.probe.build_probe))
 
     MpiBuilder.register(SpaunStimulus)(
         make_builder(build_spaun_stimulus))
@@ -165,7 +165,7 @@ with warnings.catch_warnings():
                 probed_connections.append(probe.target)
         model.probed_connections |= set(probed_connections)
 
-        return builder.build_network(model, network)
+        return builder.network.build_network(model, network)
 
     MpiBuilder.register(Network)(
         make_builder(mpi_build_network))
@@ -798,7 +798,7 @@ class MpiModel(builder.Model):
                             "Cannot create SimPyFunc operator "
                             "when saving to file.")
 
-                    t_in = op.t_in
+                    t_in = op.t
                     fn = op.fn
                     x = op.x
 
@@ -858,11 +858,11 @@ class MpiModel(builder.Model):
                 "Copy", signal_to_string(op.dst), signal_to_string(op.src)]
 
         elif op_type == builder.operator.SlicedCopy:
-            a = op.a.base
-            a_slice = op.a_base_slice
+            a = op.src.base
+            a_slice = op.src_slice
 
-            b = op.b.base
-            b_slice = op.b_base_slice
+            b = op.dst.base
+            b_slice = op.dst_slice
 
             try:
                 seq_A = list(iter(a_slice))
@@ -986,44 +986,44 @@ class MpiModel(builder.Model):
                     'nengo_mpi cannot handle neurons of type ' +
                     str(neuron_type))
 
-        elif op_type == builder.synapses.SimSynapse:
-
-            if isinstance(op.synapse, LinearFilter):
-                step = op.synapse.make_step(self.dt, [])
-                den = step.den
-                num = step.num
-
-                if len(num) == 1 and len(den) == 0:
-                    op_args = [
-                        "NoDenSynapse", signal_to_string(op.input),
-                        signal_to_string(op.output), num[0]]
-                elif len(num) == 1 and len(den) == 1:
-                    op_args = [
-                        "SimpleSynapse", signal_to_string(op.input),
-                        signal_to_string(op.output), den[0], num[0]]
-                else:
-                    op_args = [
-                        "Synapse", signal_to_string(op.input),
-                        signal_to_string(op.output),
-                        ",".join(map(str, num)),
-                        ",".join(map(str, den))]
-
-            elif isinstance(op.synapse, Triangle):
-                f = op.synapse.make_step(self.dt, op.output)
-                closures = get_closures(f)
-                n0 = closures['n0']
-                ndiff = closures['ndiff']
-                x = closures['x']
-                n_taps = x.maxlen
-
-                op_args = [
-                    "TriangleSynapse", signal_to_string(op.input),
-                    signal_to_string(op.output), n0, ndiff, n_taps]
-
-            else:
-                raise NotImplementedError(
-                    'nengo_mpi cannot handle synapses of '
-                    'type %s' % type(op.synapse))
+#        elif op_type == builder.synapses.SimSynapse:
+#
+#            if isinstance(op.synapse, LinearFilter):
+#                step = op.synapse.make_step(self.dt, [])
+#                den = step.den
+#                num = step.num
+#
+#                if len(num) == 1 and len(den) == 0:
+#                    op_args = [
+#                        "NoDenSynapse", signal_to_string(op.input),
+#                        signal_to_string(op.output), num[0]]
+#                elif len(num) == 1 and len(den) == 1:
+#                    op_args = [
+#                        "SimpleSynapse", signal_to_string(op.input),
+#                        signal_to_string(op.output), den[0], num[0]]
+#                else:
+#                    op_args = [
+#                        "Synapse", signal_to_string(op.input),
+#                        signal_to_string(op.output),
+#                        ",".join(map(str, num)),
+#                        ",".join(map(str, den))]
+#
+#            elif isinstance(op.synapse, Triangle):
+#                f = op.synapse.make_step(self.dt, op.output)
+#                closures = get_closures(f)
+#                n0 = closures['n0']
+#                ndiff = closures['ndiff']
+#                x = closures['x']
+#                n_taps = x.maxlen
+#
+#                op_args = [
+#                    "TriangleSynapse", signal_to_string(op.input),
+#                    signal_to_string(op.output), n0, ndiff, n_taps]
+#
+#            else:
+#                raise NotImplementedError(
+#                    'nengo_mpi cannot handle synapses of '
+#                    'type %s' % type(op.synapse))
 
         elif op_type == builder.processes.SimProcess:
             process_type = type(op.process)
