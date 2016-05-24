@@ -85,12 +85,12 @@ class Simulator(object):
             if partitioner is None:
                 partitioner = Partitioner()
 
-            print "Partitioning network..."
+            print ("Partitioning network...")
             p = partitioner.partition(network)
 
         self.n_components, self.assignments = p
 
-        print "Building MPI model..."
+        print ("Building MPI model...")
         self.model = MpiModel(
             self.n_components, self.assignments, dt=dt,
             label="%s, dt=%f" % (network, dt),
@@ -99,7 +99,7 @@ class Simulator(object):
 
         MpiBuilder.build(self.model, network)
 
-        print "Finalizing MPI model..."
+        print ("Finalizing MPI model...")
         self.model.finalize_build()
 
         # probe -> list
@@ -107,7 +107,7 @@ class Simulator(object):
 
         self.data = ProbeDict(self._probe_outputs)
 
-        print "MPI model ready."
+        print ("MPI model ready.")
 
         if self.runnable:
             seed = np.random.randint(npext.maxint) if seed is None else seed
@@ -150,7 +150,7 @@ class Simulator(object):
 
         self.n_steps += steps
 
-        print "MPI Simulation complete."
+        print ("MPI Simulation complete.")
 
     def step(self):
         """ Advance the simulator by `self.dt` seconds. """

@@ -19,4 +19,4 @@ def write_to_csv(filename, vals):
             df.to_csv(f, header=do_header)
 
     except:
-        print "Could not write to file %s." % filename
+        print ("Could not write to file %s." % filename)

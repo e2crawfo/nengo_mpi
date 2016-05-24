@@ -35,7 +35,7 @@ def write_metis_input_file(cluster_graph):
     """
     f = tempfile.NamedTemporaryFile(mode='w', prefix='metis', delete=False)
 
-    print "Writing metis file: %s" % f.name
+    print ("Writing metis file: %s" % f.name)
 
     with f:
         m = cluster_graph.number_of_edges()
@@ -74,7 +74,7 @@ def read_metis_output_file(filename):
     A list L where the i-th element is the component index of the i-th node.
 
     """
-    print "Reading metis output file: %s" % filename
+    print ("Reading metis output file: %s" % filename)
 
     node_assignments = []
 
@@ -116,7 +116,7 @@ def metis_partitioner(cluster_graph, n_components, delete_file=True):
 
     filename = write_metis_input_file(cluster_graph)
 
-    print "Running metis..."
+    print ("Running metis...")
     subprocess.check_call(['gpmetis', filename, str(n_components)])
 
     output_filename = metis_output_filename(filename, n_components)
