@@ -49,7 +49,7 @@ def default_generator(n_nodes, q, rng=None):
             n_cur_edges += 1
 
             if n_cur_edges % 100 == 0:
-                print "Done %d edges." % n_cur_edges
+                print ( "Done %d edges." % n_cur_edges )
 
     return edges
 
@@ -92,7 +92,7 @@ def nengo_network_from_graph(
                 probes.append(probe)
 
             if i % 100 == 0:
-                print "Done %d ensembles." % i
+                print ( "Done %d ensembles." % i )
 
         if use_ea:
             nengo.Connection(input_node, ensembles[0].input)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         help="Seed for random number generation.")
 
     args = parser.parse_args()
-    print "Parameters are: ", args
+    print ( "Parameters are: ", args )
 
     name = 'MpiRandomGraphBenchmark'
     npd = args.npd
@@ -235,7 +235,7 @@ if __name__ == "__main__":
         mpi_log += '.h5'
 
     if mpi_log:
-        print "Logging simulation results to", mpi_log
+        print ( "Logging simulation results to", mpi_log )
 
     sim_time = args.t
 
@@ -264,12 +264,12 @@ if __name__ == "__main__":
 
         dg = nx.DiGraph(edges)
         out_degree = pd.Series([o[1] for o in dg.out_degree_iter()])
-        print "Out-degree: "
-        print out_degree.describe()
+        print ("Out-degree: ")
+        print (out_degree.describe())
 
         in_degree = pd.Series([i[1] for i in dg.in_degree_iter()])
-        print "In-degree: "
-        print in_degree.describe()
+        print ("In-degree: ")
+        print (in_degree.describe())
     else:
         raise NotImplemented()
 
@@ -295,7 +295,7 @@ if __name__ == "__main__":
             model, dt=0.001, partitioner=partitioner, save_file=save_file)
 
         if save_file:
-            print "Saved network to", save_file
+            print ("Saved network to", save_file)
     else:
         sim = nengo.Simulator(model, dt=0.001)
 
@@ -308,7 +308,7 @@ if __name__ == "__main__":
     vals['n_neurons'] = n_neurons
     write_to_csv(build_times, vals)
 
-    print "BUILD TIME: %f" % (t1 - t0)
+    print ("BUILD TIME: %f" % (t1 - t0))
 
     if not save_file:
         t0 = time.time()
@@ -322,13 +322,13 @@ if __name__ == "__main__":
 
         if not mpi_log:
             for i, p in enumerate(probes):
-                print "Result from %s: " % p
-                print sim.data[p][-10:]
+                print ("Result from %s: " % p)
+                print (sim.data[p][-10:])
 
-        print "Total simulation time: %g seconds" % (t1 - t0)
-        print "Parameters were: ", args
-        print "Number of neurons in network: ", n_neurons
-        print "Number of nodes in network: ", n_nodes
+        print ("Total simulation time: %g seconds" % (t1 - t0))
+        print ("Parameters were: ", args)
+        print ("Number of neurons in network: ", n_neurons)
+        print ("Number of nodes in network: ", n_nodes)
 
         vals = vars(args).copy()
         vals['runtime'] = t1 - t0

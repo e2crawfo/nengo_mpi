@@ -81,7 +81,7 @@ parser.add_argument(
 
 
 args = parser.parse_args()
-print "Parameters are: ", args
+print ("Parameters are: ", args)
 
 name = 'Grid'
 N = args.npd
@@ -114,7 +114,7 @@ if mpi_log == 'grid':
             args.p, stream_length, n_streams))
 
 if mpi_log:
-    print "Logging simulation results to", mpi_log
+    print ("Logging simulation results to", mpi_log)
 
 sim_time = args.t
 
@@ -204,7 +204,7 @@ if use_mpi:
             m, dt=0.001, assignments=assignments, save_file=save_file)
 
     if save_file:
-        print "Saved network to", save_file
+        print ("Saved network to", save_file)
 else:
     sim = nengo.Simulator(m, dt=0.001)
 
@@ -226,16 +226,16 @@ if not save_file:
     t1 = time.time()
 
     if not mpi_log:
-        print "Input node result: "
-        print sim.data[input_p][-10:]
+        print ("Input node result: ")
+        print (sim.data[input_p][-10:])
 
         for i, p in enumerate(probes):
-            print "Stream %d result: " % i
-            print sim.data[p][-10:]
+            print ("Stream %d result: " % i)
+            print (sim.data[p][-10:])
 
-    print "Total simulation time:", t1 - t0, "seconds"
-    print "Parameters were: ", args
-    print "Number of neurons in simulations: ", n_neurons
+    print ("Total simulation time:", t1 - t0, "seconds")
+    print ("Parameters were: ", args)
+    print ("Number of neurons in simulations: ", n_neurons)
 
     vals = vars(args).copy()
     vals['runtime'] = t1 - t0

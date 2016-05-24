@@ -207,7 +207,7 @@ if __name__ == "__main__":
 
     network_name = path.split(network_file)[-1]
     network_name = path.splitext(network_name)[0]
-    print "Network name: ", network_name
+    print ("Network name: ", network_name)
 
     # Create directory to run the job from
     working_dir = make_directory_name(experiments_dir, network_name)
@@ -249,4 +249,4 @@ if __name__ == "__main__":
 
     # Create a file in the directory with the job_id as its name
     open(job_id, 'w').close()
-    print "Job ID: ", job_id
+    print ("Job ID: ", job_id)

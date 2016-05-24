@@ -143,10 +143,10 @@ class Partitioner(object):
     @property
     def default_partition_func(self):
         if metis_available():
-            print "Defaulting to metis partitioner"
+            print ("Defaulting to metis partitioner")
             return metis_partitioner
         else:
-            print "Defaulting to work-balanced partitioner"
+            print ("Defaulting to work-balanced partitioner")
             return work_balanced_partitioner
 
     def partition(self, network):
@@ -709,7 +709,7 @@ def evaluate_partition(
         network, n_components, assignments, cluster_graph, can_cross_boundary):
     """ Print a summary of the quality of a partition. """
 
-    print "*" * 80
+    print ( "*" * 80)
 
     key = lambda n: sum(
         e.n_neurons for e in n.objects if hasattr(e, 'n_neurons'))
@@ -721,20 +721,20 @@ def evaluate_partition(
         all(isinstance(o, Node) for o in n.objects)
         for n in cluster_graph.nodes()]
 
-    print "Cluster graph statistics:"
-    print "Number of clusters: ", cluster_graph.number_of_nodes()
-    print "Number of edges: ", cluster_graph.number_of_edges()
-    print "Number of clusters containing only nengo Nodes: ", sum(only_nodes)
+    print ("Cluster graph statistics:")
+    print ("Number of clusters: ", cluster_graph.number_of_nodes())
+    print ("Number of edges: ", cluster_graph.number_of_edges())
+    print ("Number of clusters containing only nengo Nodes: ", sum(only_nodes))
 
-    print "Mean neurons per cluster: ", np.mean(cluster_n_neurons)
-    print "Std of neurons per cluster", np.std(cluster_n_neurons)
-    print "Min number of neurons", np.min(cluster_n_neurons)
-    print "Max number of neurons", np.max(cluster_n_neurons)
+    print ("Mean neurons per cluster: ", np.mean(cluster_n_neurons))
+    print ("Std of neurons per cluster", np.std(cluster_n_neurons))
+    print ("Min number of neurons", np.min(cluster_n_neurons))
+    print ("Max number of neurons", np.max(cluster_n_neurons))
 
-    print "Mean nengo objects per cluster: ", np.mean(cluster_n_items)
-    print "Std of nengo objects per cluster", np.std(cluster_n_items)
-    print "Min number of nengo objects", np.min(cluster_n_items)
-    print "Max number of nengo objects", np.max(cluster_n_items)
+    print ("Mean nengo objects per cluster: ", np.mean(cluster_n_items))
+    print ("Std of nengo objects per cluster", np.std(cluster_n_items))
+    print ("Min number of nengo objects", np.min(cluster_n_items))
+    print ("Max number of nengo objects", np.max(cluster_n_items))
 
     component_neuron_counts = [0] * n_components
     component_item_counts = [0] * n_components
@@ -751,14 +751,14 @@ def evaluate_partition(
     mean_neuron_count = np.mean(component_neuron_counts)
     neuron_count_std = np.std(component_neuron_counts)
 
-    print "*" * 20
-    print "Evaluating partition of network"
+    print ("*" * 20)
+    print ("Evaluating partition of network")
 
-    print "Total number of neurons: ", total_neurons(network)
-    print "Mean neurons per component: ", mean_neuron_count
-    print "Standard deviation of neurons per component", neuron_count_std
-    print "Min number of neurons", np.min(component_neuron_counts)
-    print "Max number of neurons", np.max(component_neuron_counts)
+    print ("Total number of neurons: ", total_neurons(network))
+    print ("Mean neurons per component: ", mean_neuron_count)
+    print ("Standard deviation of neurons per component", neuron_count_std)
+    print ("Min number of neurons", np.min(component_neuron_counts))
+    print ("Max number of neurons", np.max(component_neuron_counts))
     print (
         "Number of empty partitions: "
         "%d" % (n_components - np.count_nonzero(component_neuron_counts)))
@@ -766,15 +766,15 @@ def evaluate_partition(
     mean_item_count = np.mean(component_item_counts)
     item_count_std = np.std(component_item_counts)
 
-    print "*" * 10
+    print ("*" * 10)
 
     print (
         "Total number of nengo objects (Nodes and Ensembles): "
         "%d" % len(network.all_nodes + network.all_ensembles))
-    print "Mean nengo objects per component: ", mean_item_count
-    print "Standard deviation of nengo objects per component", item_count_std
-    print "Min number of nengo objects", np.min(component_item_counts)
-    print "Max number of nengo objects", np.max(component_item_counts)
+    print ("Mean nengo objects per component: ", mean_item_count)
+    print ("Standard deviation of nengo objects per component", item_count_std)
+    print ("Min number of nengo objects", np.min(component_item_counts))
+    print ("Max number of nengo objects", np.max(component_item_counts))
 
     communication_weight = 0
     total_weight = 0
@@ -789,9 +789,9 @@ def evaluate_partition(
 
             total_weight += conn.size_mid
 
-    print "*" * 10
-    print "Number of dimensions that are communicated: ", communication_weight
-    print "Total number of communicable dimensions: ", total_weight
+    print ("*" * 10)
+    print ("Number of dimensions that are communicated: ", communication_weight)
+    print ("Total number of communicable dimensions: ", total_weight)
     print (
         "Percentage of communicable dimensions that *are* "
         "communicated: %f" % (float(communication_weight) / total_weight))
@@ -813,17 +813,17 @@ def evaluate_partition(
     n_send_partners = [len(s) for s in send_partners]
     n_recv_partners = [len(s) for s in recv_partners]
 
-    print "*" * 10
-    print "Mean number of send partners: ", np.mean(n_send_partners)
-    print "Standard dev of send partners: ", np.std(n_send_partners)
-    print "Max number of send partners: ", np.max(n_send_partners)
-    print "Min number of send partners: ", np.min(n_send_partners)
+    print ("*" * 10)
+    print ("Mean number of send partners: ", np.mean(n_send_partners))
+    print ("Standard dev of send partners: ", np.std(n_send_partners))
+    print ("Max number of send partners: ", np.max(n_send_partners))
+    print ("Min number of send partners: ", np.min(n_send_partners))
 
-    print "*" * 10
-    print "Mean number of recv partners: ", np.mean(n_recv_partners)
-    print "Standard dev of recv partners: ", np.std(n_recv_partners)
-    print "Max number of recv partners: ", np.max(n_recv_partners)
-    print "Min number of recv partners: ", np.min(n_recv_partners)
+    print ("*" * 10)
+    print ("Mean number of recv partners: ", np.mean(n_recv_partners))
+    print ("Standard dev of recv partners: ", np.std(n_recv_partners))
+    print ("Max number of recv partners: ", np.max(n_recv_partners))
+    print ("Min number of recv partners: ", np.min(n_recv_partners))
 
 
 def remove_from_network(network, obj):

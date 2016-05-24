@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{dfe42133-804d-4f50-a394-0559fbd326be}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>setup.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="docs\images\bgq_random_run.svg" />
+    <Content Include="docs\images\bgq_spaun_run.svg" />
+    <Content Include="docs\images\bgq_stream_run.svg" />
+    <Content Include="docs\images\gpc_random_run.svg" />
+    <Content Include="docs\images\gpc_spaun_run.svg" />
+    <Content Include="docs\images\gpc_stream_run.svg" />
+    <Content Include="docs\images\nengo_mpi_signals.svg" />
+    <Content Include="docs\images\nengo_signals.svg" />
+    <Content Include="docs\images\pc_random_run.svg" />
+    <Content Include="docs\images\pc_spaun_run.svg" />
+    <Content Include="docs\images\pc_stream_run.svg" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\etaExample.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\example.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\ezETAProgressBar.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\ezProgressBar.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\ezRateProgressBar.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\index.html" />
+    <Content Include="mpi_sim\ezProgressBar-2.1.1\html\rateExample.html" />
+    <Content Include="requirements-docs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bench\dodo.py" />
+    <Compile Include="bench\grid.py" />
+    <Compile Include="bench\random_graph.py" />
+    <Compile Include="bench\submit_grid_jobs.py" />
+    <Compile Include="bench\submit_random_jobs.py" />
+    <Compile Include="bench\utils.py" />
+    <Compile Include="docs\conf.py" />
+    <Compile Include="nengo_mpi\model.py" />
+    <Compile Include="nengo_mpi\partition\base.py" />
+    <Compile Include="nengo_mpi\partition\metis.py" />
+    <Compile Include="nengo_mpi\partition\random.py" />
+    <Compile Include="nengo_mpi\partition\split_ea.py" />
+    <Compile Include="nengo_mpi\partition\tests\conftest.py" />
+    <Compile Include="nengo_mpi\partition\tests\test_partition.py" />
+    <Compile Include="nengo_mpi\partition\tests\test_split_ea.py" />
+    <Compile Include="nengo_mpi\partition\work_balanced.py" />
+    <Compile Include="nengo_mpi\partition\__init__.py" />
+    <Compile Include="nengo_mpi\simulator.py" />
+    <Compile Include="nengo_mpi\spaun_mpi.py" />
+    <Compile Include="nengo_mpi\tests\conftest.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\basic_mpi.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\random_graph.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\sim_close.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\sim_context_manager.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\sim_reset.py" />
+    <Compile Include="nengo_mpi\tests\mpi_tests\sim_too_many_open.py" />
+    <Compile Include="nengo_mpi\tests\test_cpp.py" />
+    <Compile Include="nengo_mpi\tests\test_mpi.py" />
+    <Compile Include="nengo_mpi\tests\test_native_operators.py" />
+    <Compile Include="nengo_mpi\tests\test_refimpl.py" />
+    <Compile Include="nengo_mpi\tests\test_simulator.py" />
+    <Compile Include="nengo_mpi\tests\utils.py" />
+    <Compile Include="nengo_mpi\tests\__init__.py" />
+    <Compile Include="nengo_mpi\version.py" />
+    <Compile Include="nengo_mpi\__init__.py" />
+    <Compile Include="nengo_mpi\__main__.py" />
+    <Compile Include="scripts\load_probes.py" />
+    <Compile Include="setup.py" />
+    <Compile Include="submit_job.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bench" />
+    <Folder Include="docs" />
+    <Folder Include="docs\images" />
+    <Folder Include="mpi_sim\" />
+    <Folder Include="mpi_sim\ezProgressBar-2.1.1\" />
+    <Folder Include="mpi_sim\ezProgressBar-2.1.1\html" />
+    <Folder Include="nengo_mpi" />
+    <Folder Include="nengo_mpi\partition" />
+    <Folder Include="nengo_mpi\partition\tests" />
+    <Folder Include="nengo_mpi\tests" />
+    <Folder Include="nengo_mpi\tests\mpi_tests" />
+    <Folder Include="scripts" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
